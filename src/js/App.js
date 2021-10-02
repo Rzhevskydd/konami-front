@@ -58,9 +58,21 @@ class App extends Component {
 			method: 'POST',
 			headers: {
 			  'Content-Type': 'application/json;charset=utf-8',
-			  'Access-Control-Allow-Origin': '*',
 			},
-			body: "kek",
+			body: JSON.stringify({
+				image: window.btoa(binary),
+			}),
+		}).then(response => {
+			return response.json();
+		}).then(body => {
+			console.log(body.text);
+			this.hashOutput.current.innerHTML = body.text;
+			this.setState({
+				image: this.state.image,
+				hash: body.text
+			});
+			this.hashOutput.current.style.display = "block";
+			this.buttonRef.current.style.display = "none";
 		});
 
 		console.log(window.btoa(binary));
